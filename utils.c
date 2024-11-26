@@ -1,3 +1,4 @@
+//提供通用功能，例如文件操作、输入校验、通用排序等。
 #ifndef UTILS_H
 #define UTILS_H
 
