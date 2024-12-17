@@ -9,7 +9,7 @@ SRCS = main.c student.c course.c score.c utils.c
 OBJS = $(SRCS:.c=.o)
 
 # 可执行文件名
-TARGET = main
+TARGET = main.exe
 
 # 默认目标
 all: $(TARGET)
