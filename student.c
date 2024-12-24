@@ -54,7 +54,6 @@ void manageStudent() {
                 break;
             }
     }while (choice!= 5);
-    printf("学生信息管理功能未实现。\n");
 }
 
 void loadStudentsFromFile(const char* filename) {

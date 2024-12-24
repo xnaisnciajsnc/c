@@ -29,7 +29,7 @@ typedef struct Course{
     char courseType[20];//课程类型
 }Course;
 
-
+//ui操作
 void clearScreen() {
     printf("\033[H\033[J");
 }
@@ -41,7 +41,7 @@ void pause() {
 }
 
 
-
+// 文件操作
 void removeContent(const char* filename,const char* contentToRemove) {
     //打开文件
     FILE* fp = fopen(filename, "r+");
