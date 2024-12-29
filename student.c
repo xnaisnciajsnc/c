@@ -149,7 +149,7 @@ void deleteStudent() {
     char studentID[20];
     printf("请输入要删除的学生学号: ");
     scanf("%s", studentID);
-
+    printStudentList();
     // 遍历链表，找到要删除的学生信息
     Student* prev = NULL;
     Student* curr = head;

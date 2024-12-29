@@ -18,7 +18,7 @@ int main() {
 
         switch (choice) {
             case 1: manageStudent(); break;
-            // case 2: manageCourse(); break;
+            case 2: manageCourse(); break;
             // case 3: manageScore(); break;
             // case 4: analyzeStatistics(); break;
             // case 5: checkGraduation(); break;
