@@ -16,52 +16,6 @@ typedef struct Course{
 }Course;
 
 Course* courseHead=NULL;
-
-void updateCourse(){
-    char courseID[10];
-    printf("请输入要修改的课程号：\n");
-    scanf("%s",courseID);
-    Course* curr=courseHead;
-    while(curr!=NULL){
-        if(strcmp(curr->courseID,courseID)==0){
-            printf("请输入新的课程号：\n");
-            scanf("%s",curr->courseID);
-            printf("请输入新的课程名称：\n");
-            scanf("%s",curr->courseName);
-            printf("请输入新的学分：\n");
-            scanf("%f",&curr->credit);
-            printf("请输入新的课程类别：\n");
-            scanf("%s",curr->courseType);
-            char*newContent = createContent(curr,NULL,NULL);
-            if(newContent==NULL){
-                printf("内存分配失败！");
-                return;
-            }
-            editContent("course.txt",curr->courseID,newContent);
-            printf("修改成功！\n");
-            free(newContent);
-            return;
-
-        }
-    }
-    printf("未找到该课程信息\n");
-
-}
-void viewCourses(){char courseID[10];
-    printf("请输入要查看的课程号：\n");
-    scanf("%s",courseID);
-    Course* curr=courseHead;
-    while(curr!=NULL){
-        if(strcmp(curr->courseID,courseID)==0){
-            printf("%s,%s,%f,%s\n",curr->courseID,curr->courseName,curr->credit,curr->courseType);
-            return;
-        }
-        curr=curr->next;
-    }
-    printf("未找到该课程信息\n");
-    free(curr);
-
-}
 void loadCoursesFromFile(const char* filename){
     freeCourses();
     FILE *fp = fopen(filename,"r");
@@ -83,7 +37,63 @@ void loadCoursesFromFile(const char* filename){
 
     }
     fclose(fp);
-    printf("课程信息加载成功！");
+    printf("课程信息加载成功！\n");
+}
+
+void updateCourse(){
+    freeCourses();
+    loadCoursesFromFile("course.txt");
+    char courseID[10];
+    printf("请输入要修改的课程号：\n");
+    scanf("%s",courseID);
+    Course* curr=courseHead;
+    while(curr!=NULL){
+        printf("1\n");
+        if(strcmp(curr->courseID,courseID)==0){
+            printf("请输入新的课程信息\n");
+            printf("请输入新的课程号：\n");
+            scanf("%s",curr->courseID);
+            printf("请输入新的课程名称：\n");
+            scanf("%s",curr->courseName);
+            printf("请输入新的学分：\n");
+            scanf("%f",&curr->credit);
+            printf("请输入新的课程类别：\n");
+            scanf("%s",curr->courseType);
+            char*newContent = createContent(curr,NULL,NULL);
+            if(newContent==NULL){
+                printf("内存分配失败！");
+                return;
+            }
+            editContent("course.txt",curr->courseID,newContent);
+            printf("修改成功！\n");
+            free(newContent);
+            return;
+
+        }
+        curr = curr -> next;
+    }
+    printf("未找到该课程信息\n");
+
+}
+void viewCourses(){
+    freeCourses();
+    loadCoursesFromFile("course.txt");
+    char courseID[10];
+    printf("请输入要查看的课程号：\n");
+    scanf("%s",courseID);
+    Course* curr=courseHead;
+    while(curr!=NULL){
+        if(strcmp(curr->courseID,courseID)==0){
+            printf("%s,%s,%f,%s\n",curr->courseID,curr->courseName,curr->credit,curr->courseType);
+            return;
+        }
+        curr=curr->next;
+
+
+    }
+    printf("未找到该课程信息\n");
+    free(curr);
+
 }
 void printcourses(){
     Course* curr=courseHead;
@@ -128,6 +138,10 @@ void manageCourse(){
             case 5:
                 freeCourses();
                 break;
+            //test
+            case 6:
+                printcourses();
+                break;
             case 0:
                 break;
             default:
@@ -162,12 +176,14 @@ void addCourse(){
     free(newcourse);
 }
 void deleteCourse(){
+    freeCourses();
+    loadCoursesFromFile("course.txt");
     printf("请输入要删除的课程号：\n");
     char courseID[10];
     scanf("%s",courseID);
 
 
-
+    printcourses();
     Course* curr=courseHead ;
     Course* prev=NULL;
     while(curr!=NULL){
@@ -178,10 +194,10 @@ void deleteCourse(){
             }else{
                 prev->next = curr->next;
             }
-        removeContent("course.txt",courseID);
-        printf("删除成功！");
-        free(curr);
-        return;
+            removeContent("course.txt",courseID);
+            printf("删除成功！");
+            free(curr);
+            return;
     }
         prev = curr;
         curr = curr->next;
